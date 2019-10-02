@@ -1,0 +1,129 @@
+[TimeManager]
+TInitEnd =                 0.000000001 # [s]
+TEnd =                       1.72e6 # [s]
+DtInitial =                0.000000001 # [s]
+EpisodeLengthMainSimulation =    1 # 86400 # [s]
+
+[Grid]
+UpperRight = 1000 200
+Cells = 10 100
+
+#File = ./grids/gridfile.msh
+#File = ./grids/bp03_2D_10000x30_R20x5_refN589.dgf
+#File = ./grids/bp03_2D_10000x30_R20x5_refN775.dgf
+#File = ./grids/bp03_2D_10000x10_R20x5_refN1265.dgf 
+#File = ./grids/bp03_2D_10000x30_R100x10_refN1947.dgf # line at 468 in baserock 
+#File = ./grids/bp03_2D_10000x30_R100x10_refN2109.dgf
+#File = ./grids/bp03_2D_10000x30_R100x10_refN2166.dgf
+#File = ./grids/bp03_2D_10000x30_R100x10_refN2242.dgf
+#File = ./grids/bp03_2D_10000x30_R100x20_refN3360.dgf
+#File = ./grids/bp03_2D_10000x30_R100x20_refN3744.dgf
+#File = ./grids/bp03_2D_1000x1000_R50x30_refN3038.dgf
+#File = ./grids/bp03_2D_10000x30_R100x20_refN3960.dgf # good refinement below and above reservoir # good for testing
+#File = ./grids/bp03_2D_10000x30_R100x20_refN4032.dgf # good refinement below and above reservoir # good for testing # models don't converge with this
+#File = ./grids/bp03_2D_10000x30_R100x20_refN4464.dgf # good refinement below and above reservoir # best refined near 470 500 CR and BR
+#File = ./grids/bp03_2D_10000x30_R500x30_refN7296.dgf
+#File = ./grids/bp03_2D_10000x30_R100x50_refN13900.dgf
+Refine = 0
+
+[Problem]
+Name = simplebenchmark # name passed to the output routines
+LayerBaseRock = 370 #[m]
+LayerCapRock = 100 #[m]
+LayerReservoir  = 470 #[m]
+LayerUpperAquifer = 600 #[m]
+
+[FailureParameters]
+MohrCoulombWorstCase = 0
+
+SpatialTolerance = 30 # was 3 for the fine grid
+SpatialTolerance2 = 10 # was 3 for the fine grid
+FaultAngle = -11.3099 # angle of the fault in degrees
+
+FrictionAngleMatrix = 70.0 # in degrees
+FrictionAngleFault  = 31.0 # in degrees
+CohesionMatrix = 0.0
+CohesionFault  = 0.0
+DilationAngle = 10
+
+[Injection]
+Rate = 1 #0.0071111111 # source injection rate [kg / (m^3 s)] consistent with 10 kg / s into a volume of 6.25 m x 5 m x 1 m
+ExtrusionFactor = 0.0889 #
+HeightWell = 30 # [m]
+DepthBOR = 200 # Depth at the center of the scenario [m]
+InjectionStop = 1.72e8 # 26531.38 for UndamagedShearStrength = 1.00, 26800 for UndamagedShearStrength = 0.95 [s]
+XminSource1 = -1.0e-5   # x-Coordinate of the injection 1 (left)
+XmaxSource1 = 1.0e-5    # x-Coordinate of the injection 1 (right)
+YminSource1 = 0 # 470.0  # 470 y-Coordinate of the injection 1 (bottom) #TODO
+YmaxSource1 = 50 # 500.0 # 500 y-Coordinate of the injection 1 (top) #TODO
+
+XminSource2 = -1.0    # x-Coordinate of the injection 2 (left)
+XmaxSource2 = 1.0    # x-Coordinate of the injection 2 (right)
+YminSource2 = 0.0    # y-Coordinate of the injection 2 (bottom)
+YmaxSource2 =  0.0    # y-Coordinate of the injection 2 (top)
+
+Nonwetting = 1 # 1 - true = inject CO2
+
+[ElasticParameters]
+Ematrix = 10e9
+Efault = 5e9
+nuFault = 0.25
+nuMatrix = 0.25	
+
+[TransportParameters]
+Kinit = 1.23E-13  #  1e-14 # initial permeability [m²]
+KMatrix = 1.23E-13  # permeability [m²]
+KFault = 1.E-15
+KCapRock = 1.0E-17 # Table 1.E-17 # TODO 1.0e-18
+KBaseRock = 1.E-18
+KUpperAquifer = 1.E-13 
+KBaseAquifer = 1.E-14
+
+PhiMatrix   = 0.1     # porosity
+PhiCaprock  = 0.01     # porosity
+
+[SpatialParameters]
+PorosityReservoir = 0.20 # 
+PorosityCapRock = 0.01 # Table 0.01 # TODO
+PorosityBaseRock = 0.01 # Table 0.01 # TODO
+PorosityBasalAquifer = 0.1 # 0.2 # 0.10 # 
+PorosityUpperAquifer = 0.15 #0.2 #0.15 #
+EntryPressure = 2000 # 1.99e4 # Table  5700 [Pa] 
+EntryPressureCapRock = 1.0e5 # 5.0e6 # Table 5.0e6 # TODO
+EntryPressureBaseRock = 2.0e6 # 2.0e6 # Table 2.0e6 # TODO 
+EntryPressureUpperAquifer = 0.01e6 # 
+EntryPressureBasalAquifer = 0.02e6 #
+
+Swr = 0.04 # BP3 Table 0.04 # 
+SwrCapRock = 0.3 # BP3 Table 0.3 # TODO
+SwrBaseRock = 0.3 # BP3 Table 0.3 # TODO 
+SwrUpperAquifer = 0.04 # BP3 Table 0.04 
+SwrBaseAquifer = 0.04 #
+Snr = 0.00 #
+mReservoir = 0.315 # [Pa]
+mCapRock = 0.457 # BP3 Table 0.457 # TODO
+mBaseRock = 0.457 # BP3 Table 0.457 # TODO 
+mUpperAquifer = 0.6 #
+mBasalAquifer = 0.6 #
+EReservoir = 15.0e9 ## Young's modulus E [GPa]
+EBaseRock = 5.0e9 # 
+ECapRock = 5.0e9 # 
+EBasalAquifer = 20.0e9 #
+EUpperAquifer = 10.0e9 #
+nuReservoir = 0.3 # Young's modulus E [GPa]
+nuBaseRock = 0.3 # 
+nuCapRock = 0.3 # 
+nuBasalAquifer = 0.3 #
+nuUpperAquifer = 0.3 #
+RockDensity = 2400
+
+## idx 0 = caprock&baserock, 1-reservoir, 2-upper&lower reservoir
+VGDomainIdxReservoir = 1  
+VGDomainIdxBaseRock = 1 # 0 # TODO # with Table 3 function does not converge 
+VGDomainIdxCapRock = 1 # 0 # TODO # imposing reservoir and CapRock with same VG function
+VGDomainIdxUpperAquifer = 2 
+VGDomainIdxBasalAquifer = 2
+
+[Implicit]
+MassUpwindWeight = 1.0
+MobilityUpwindWeight = 1.0
